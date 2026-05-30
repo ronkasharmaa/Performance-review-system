@@ -9,6 +9,7 @@ import {
   Target,
   BarChart3,
   Users,
+  FileText,
 } from "lucide-react";
 
 const employeeLinks = [
@@ -40,6 +41,11 @@ const hrLinks = [
     href: "/hr",
     icon: BarChart3,
   },
+  {
+    title: "Reports",
+    href: "/hr/reports",
+    icon: FileText,
+  },
 ];
 
 interface SidebarProps {
@@ -52,9 +58,9 @@ export default function Sidebar({
   const pathname = usePathname();
 
   const links =
-    role === "hr"
-      ? [...employeeLinks, ...hrLinks]
-      : employeeLinks;
+  role === "hr"
+    ? hrLinks
+    : employeeLinks;
 
   return (
     <div className="w-64 h-screen bg-zinc-950 border-r border-zinc-800 p-5">

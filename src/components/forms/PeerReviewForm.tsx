@@ -2,19 +2,21 @@
 
 import { useState } from "react";
 import { toast } from "sonner";
-
+import { useEmployee } from "@/context/EmployeeContext";
 import {
   submitPeerReview,
 } from "@/services/reviewService";
 
 export default function PeerReviewForm() {
+  const { employeeId } =
+  useEmployee();
   const [formData, setFormData] = useState({
-    reviewerId: "EMP101",
-    employeeId: "",
-    feedback: "",
-    rating: 3,
-    anonymous: true,
-  });
+  reviewerId: employeeId,
+  employeeId: "",
+  feedback: "",
+  rating: 3,
+  anonymous: true,
+});
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -38,8 +40,11 @@ export default function PeerReviewForm() {
   e.preventDefault();
 
   try {
-    const response =
-      await submitPeerReview(formData);
+const response =
+  await submitPeerReview({
+    ...formData,
+    reviewerId: employeeId,
+  });
 
     console.log(response);
 
@@ -60,6 +65,9 @@ export default function PeerReviewForm() {
       <h2 className="text-2xl font-bold text-white mb-6">
         Peer Review
       </h2>
+      <p className="text-zinc-400 mb-4">
+        Current Reviewer: {employeeId}
+      </p>
 
       <form
         onSubmit={handleSubmit}
