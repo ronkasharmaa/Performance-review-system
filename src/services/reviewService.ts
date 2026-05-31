@@ -1,4 +1,7 @@
-import { SelfReviewPayload } from "@/types/review";
+import {
+  CognitoUserSummary,
+  SelfReviewPayload,
+} from "@/types/review";
 
 const API_URL =
   process.env.NEXT_PUBLIC_API_URL;
@@ -111,4 +114,20 @@ export async function getEmployeeOKRs(
   );
 
   return response.json();
+}
+
+export async function getCognitoUsers() {
+  const response = await fetch("/api/users", {
+    cache: "no-store",
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to load Cognito users");
+  }
+
+  const data = (await response.json()) as {
+    users: CognitoUserSummary[];
+  };
+
+  return data.users;
 }

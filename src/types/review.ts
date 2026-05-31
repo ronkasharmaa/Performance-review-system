@@ -13,3 +13,13 @@ export interface SelfReviewPayload {
   improvements: string;
   rating: number;
 }
+
+export interface CognitoUserSummary {
+  id: string;
+  username: string;
+  employeeId: string;
+  displayName: string;
+  email?: string;
+  role: "employee" | "manager" | "hr";
+  groups: string[];
+}
